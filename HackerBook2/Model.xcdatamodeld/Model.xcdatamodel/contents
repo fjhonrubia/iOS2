@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
+    <entity name="Annotation" representedClassName="FHLAnnotation" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="modificationDate" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="book" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="annotations" inverseEntity="Book" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AnnotationImage" inverseName="annotation" inverseEntity="AnnotationImage" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="annotations" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <entity name="AnnotationImage" representedClassName="FHLAnnotationImage" syncable="YES">
+        <attribute name="imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="annotation" maxCount="1" deletionRule="Nullify" destinationEntity="Annotation" inverseName="image" inverseEntity="Annotation" syncable="YES"/>
+    </entity>
+    <entity name="Author" representedClassName="FHLAuthor" syncable="YES">
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="books" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="authors" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Book" representedClassName="FHLBook" syncable="YES">
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isFinished" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastPage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="pdfURL" attributeType="String" syncable="YES"/>
+        <attribute name="photoURL" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="annotations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Annotation" inverseName="book" inverseEntity="Annotation" syncable="YES"/>
+        <relationship name="authors" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
+        <relationship name="pdf" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PDFEntity" inverseName="book" inverseEntity="PDFEntity" syncable="YES"/>
+        <relationship name="photo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PhotoEntity" inverseName="book" inverseEntity="PhotoEntity" syncable="YES"/>
+        <relationship name="tags" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="books" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="FHLLocation" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" indexed="YES" syncable="YES"/>
+        <attribute name="logitude" attributeType="Double" defaultValueString="0.0" indexed="YES" syncable="YES"/>
+        <relationship name="annotations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Annotation" inverseName="location" inverseEntity="Annotation" syncable="YES"/>
+        <relationship name="mapSnapshot" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MapSnapshot" inverseName="location" inverseEntity="MapSnapshot" syncable="YES"/>
+    </entity>
+    <entity name="MapSnapshot" representedClassName="FHLMapSnapShot" syncable="YES">
+        <attribute name="snapshotData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="mapSnapshot" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <entity name="PDFEntity" representedClassName="FHLPDFEntity" syncable="YES">
+        <attribute name="pdfData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="book" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pdf" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="PhotoEntity" representedClassName="FHLPhotoEntity" syncable="YES">
+        <attribute name="photoData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="book" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="photo" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="FHLTag" syncable="YES">
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="books" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="tags" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Annotation" positionX="-119" positionY="153" width="128" height="148"/>
+        <element name="AnnotationImage" positionX="-351" positionY="213" width="128" height="73"/>
+        <element name="Author" positionX="-522" positionY="-153" width="128" height="73"/>
+        <element name="Book" positionX="-216" positionY="-174" width="128" height="208"/>
+        <element name="PDFEntity" positionX="9" positionY="-156" width="128" height="73"/>
+        <element name="PhotoEntity" positionX="18" positionY="-0" width="128" height="73"/>
+        <element name="Tag" positionX="-522" positionY="-39" width="128" height="73"/>
+        <element name="Location" positionX="-252" positionY="45" width="128" height="120"/>
+        <element name="MapSnapshot" positionX="-243" positionY="54" width="128" height="75"/>
+    </elements>
+</model>
